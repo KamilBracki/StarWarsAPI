@@ -40,6 +40,21 @@ namespace StarWarsAPI.Controllers
             }
             return character;
         }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutCharacter(int id, Character character)
+        {
+            var characterBeforeEdit = service.GetCharacterById(id);
+            if (id != character.Id)
+            {
+                return BadRequest();
+            }
+            service.DeleteRelatedFriends(characterBeforeEdit);
+            service.DeleteRelatedEpisodes(characterBeforeEdit);
+            service.AddEpisodes(character.Episodes, characterBeforeEdit);
+            service.AddFriends(character.Friends, characterBeforeEdit);
+            service.EditCharacterName(characterBeforeEdit, character);
 
+            return NoContent();
+        }
     }
 }
