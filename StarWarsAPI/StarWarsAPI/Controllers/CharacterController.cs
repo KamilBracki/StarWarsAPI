@@ -67,6 +67,20 @@ namespace StarWarsAPI.Controllers
             List<string> namesOfFriends = character.Friends;
             service.AddFriends(namesOfFriends, character);
         }
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Character>> DeleteCharacter(int id)
+        {
+            var character = service.GetCharacterById(id);
+            if (character == null)
+            {
+                return NotFound();
+            }
+            service.DeleteRelatedFriends(character);
+            service.DeleteRelatedEpisodes(character);
+            service.DeleteCharacter(character);
+
+            return character;
+        }
 
 
     }
