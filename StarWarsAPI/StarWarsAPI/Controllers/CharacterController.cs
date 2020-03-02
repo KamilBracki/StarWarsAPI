@@ -56,5 +56,18 @@ namespace StarWarsAPI.Controllers
 
             return NoContent();
         }
+        [HttpPost]
+        public void PostCharacter(Character character)
+        {
+            service.AddCharacter(character);
+
+            List<string> episodes = character.Episodes;
+            service.AddEpisodes(episodes, character);
+
+            List<string> namesOfFriends = character.Friends;
+            service.AddFriends(namesOfFriends, character);
+        }
+
+
     }
 }
