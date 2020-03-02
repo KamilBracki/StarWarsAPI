@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using System;
 using StarWarsAPI.Models;
-
+using StarWarsTest.Accesslayer.EntityConfiguration;
 
 namespace StarWarsAPI.AccessLayer
 {
@@ -28,6 +28,13 @@ namespace StarWarsAPI.AccessLayer
                 .UseNpgsql(configuration.GetConnectionString("DefaultConnection"))
                 .EnableSensitiveDataLogging();
 
+        }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfiguration(new CharacterEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new CharacterEpisodeEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new CharacterFriendEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new EpisodeEntityConfiguration());
         }
 
 
