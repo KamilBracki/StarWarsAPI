@@ -8,6 +8,7 @@ namespace StarWarsAPI.AccessLayer
 {
     public class StarContext : DbContext
     {
+        public StarContext() { }
         public StarContext(DbContextOptions<StarContext> options) : base(options)
         {
 
