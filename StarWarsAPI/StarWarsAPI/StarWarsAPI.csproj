@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\StarWarsAPI.AccessLayer\StarWarsAPI.AccessLayer.csproj" />
     <ProjectReference Include="..\StarWarsAPI.Models\StarWarsAPI.Models.csproj" />
   </ItemGroup>
 

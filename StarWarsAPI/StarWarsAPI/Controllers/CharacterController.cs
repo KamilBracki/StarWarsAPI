@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using StarWarsAPI.AccessLayer;
+using StarWarsAPI.Controllers.Services;
 using StarWarsAPI.Models;
 
 namespace StarWarsAPI.Controllers
@@ -12,15 +14,32 @@ namespace StarWarsAPI.Controllers
     [ApiController]
     public class CharacterController : ControllerBase
     {
+        private CharacterControllerService service;
+
+        public CharacterController(StarContext context)
+        {
+
+            service = new CharacterControllerService(context);
+        }
 
         [HttpGet]
-        public List<Character> GetCharacters()
+        public async Task<ActionResult<IEnumerable<Character>>> GetCharacters()
         {
-            List<Character> characters = new List<Character>();
-            characters.Add(new Character { Name = "John", CharacterId = 1, Episodes = new List<string>(){ "aaa", "ww" }, Friends = new List<string>() { "AS", "zX" } } );
-            characters.Add(new Character { Name = "John2", CharacterId = 1, Episodes = new List<string>() { "aaa2", "ww2" }, Friends = new List<string>() { "AS2", "zX2" } });
+            List<Character> characters = service.GetAllCharacters();
 
             return characters;
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Character>> GetCharacter(int id)
+        {
+            var character = service.GetCharacterById(id);
+            if (character == null)
+            {
+                return NotFound();
+            }
+            return character;
+        }
+
     }
 }
