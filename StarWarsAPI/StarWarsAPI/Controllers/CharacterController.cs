@@ -54,10 +54,10 @@ namespace StarWarsAPI.Controllers
             service.AddFriends(character.Friends, characterBeforeEdit);
             service.EditCharacterName(characterBeforeEdit, character);
 
-            return NoContent();
+            return Ok();
         }
         [HttpPost]
-        public void PostCharacter(Character character)
+        public async Task<IActionResult> PostCharacter(Character character)
         {
             service.AddCharacter(character);
 
@@ -66,6 +66,8 @@ namespace StarWarsAPI.Controllers
 
             List<string> namesOfFriends = character.Friends;
             service.AddFriends(namesOfFriends, character);
+
+            return Ok();
         }
         [HttpDelete("{id}")]
         public async Task<ActionResult<Character>> DeleteCharacter(int id)
